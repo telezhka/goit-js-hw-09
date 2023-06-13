@@ -21,14 +21,6 @@ const options = {
       window.alert('Please choose a date in the future');
       startBtn.setAttribute('disabled', true);
     } else {
-      //   const crntDays = convertMs(currentTimeMs).days;
-      //   const crntHrs = convertMs(currentTimeMs).hours;
-      //   const crntMins = convertMs(currentTimeMs).minutes;
-      //   const crntSecs = convertMs(currentTimeMs).seconds;
-      //   const days = convertMs(selectedTimeMs).days;
-      //   const hrs = convertMs(selectedTimeMs).hours;
-      //   const mins = convertMs(selectedTimeMs).minutes;
-      //   const secs = convertMs(selectedTimeMs).seconds;
       const leftDays = addLeadingZero(
         convertMs(selectedTimeMs - currentTimeMs).days
       );
@@ -41,18 +33,6 @@ const options = {
       const leftSecs = addLeadingZero(
         convertMs(selectedTimeMs - currentTimeMs).seconds
       );
-      //   console.log(crntDays);
-      //   console.log(crntHrs);
-      //   console.log(crntMins);
-      //   console.log(crntSecs);
-      //   console.log(days);
-      //   console.log(hrs);
-      //   console.log(mins);
-      //   console.log(secs);
-      //   console.log(leftDays);
-      //   console.log(leftHrs);
-      //   console.log(leftMins);
-      //   console.log(leftSecs);
       timerDays.innerHTML = leftDays;
       timerHrs.innerHTML = leftHrs;
       timerMins.innerHTML = leftMins;
@@ -85,12 +65,9 @@ function addLeadingZero(value) {
   return valueStr.padStart(2, '0');
 }
 startBtn.setAttribute('disabled', true);
-startBtn.addEventListener('click', () => {
-  //   let leftDays = Number(timerDays.innerHTML);
-  //   let leftHrs = Number(timerHrs.innerHTML);
-  //   let leftMins = Number(timerMins.innerHTML);
+startBtn.addEventListener('click', startHandler);
+function startHandler() {
   let leftSecs = Number(timerSecs.innerHTML);
-  //   console.log(leftDays, leftHrs, leftMins, leftSecs);
   if (leftSecs !== 0) {
     startBtn.removeAttribute('disabled');
     let selectedDate = date.selectedDates[0];
@@ -98,22 +75,22 @@ startBtn.addEventListener('click', () => {
     let currentDate = new Date();
     let currentTimeMs = currentDate.getTime();
     let timeLeftMs = selectedTimeMs - currentTimeMs;
-    // console.log(selectedTimeMs - currentTimeMs);
-    // console.log(convertMs(selectedTimeMs - currentTimeMs));
-    timerId = setInterval(() => {
+    const timerId = setInterval(() => {
       timeLeftMs -= 1000;
-      //   console.log(timeLeftMs);
       const leftDays = addLeadingZero(convertMs(timeLeftMs).days);
       const leftHrs = addLeadingZero(convertMs(timeLeftMs).hours);
       const leftMins = addLeadingZero(convertMs(timeLeftMs).minutes);
       const leftSecs = addLeadingZero(convertMs(timeLeftMs).seconds);
-      timerDays.innerHTML = leftDays;
-      timerHrs.innerHTML = leftHrs;
-      timerMins.innerHTML = leftMins;
-      timerSecs.innerHTML = leftSecs;
+      adder(leftDays, leftHrs, leftMins, leftSecs);
       if (timeLeftMs < 1000) {
         clearInterval(timerId);
       }
     }, 1000);
   }
-});
+}
+function adder(p1, p2, p3, p4) {
+  timerDays.innerHTML = p1;
+  timerHrs.innerHTML = p2;
+  timerMins.innerHTML = p3;
+  timerSecs.innerHTML = p4;
+}
